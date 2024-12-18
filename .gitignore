@@ -1,3 +1,15 @@
 *.pyc
-__pycache__/
 *.csv
+
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment directories
+venv/
+.env/
+
+# Ignore other files or directories
+.DS_Store
+*.log
