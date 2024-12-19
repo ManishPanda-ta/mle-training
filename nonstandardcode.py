@@ -1,9 +1,6 @@
 import os
 import tarfile
 
-import os
-import tarfile
-
 import numpy as np
 import pandas as pd
 from scipy.stats import randint
@@ -11,15 +8,17 @@ from six.moves import urllib  # type: ignore
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.model_selection import (GridSearchCV, RandomizedSearchCV,
-                                     StratifiedShuffleSplit, train_test_split)
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import StratifiedShuffleSplit
+from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 
 DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join("datasets", "housing")
 HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
-
 
 
 def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
@@ -34,7 +33,6 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
 def load_housing_data(housing_path=HOUSING_PATH):
     csv_path = os.path.join(housing_path, "housing.csv")
     return pd.read_csv(csv_path)
-
 
 
 housing = load_housing_data
@@ -172,9 +170,6 @@ param_distribs = {
     "n_estimators": randint(low=1, high=200),
     "max_features": randint(low=1, high=8),
 }
-    "n_estimators": randint(low=1, high=200),
-    "max_features": randint(low=1, high=8),
-}
 
 forest_reg = RandomForestRegressor(random_state=42)
 rnd_search = RandomizedSearchCV(
@@ -281,4 +276,3 @@ X_test_prepared = X_test_prepared.join(
 final_predictions = final_model.predict(X_test_prepared)
 final_mse = mean_squared_error(y_test, final_predictions)
 final_rmse = np.sqrt(final_mse)
-
