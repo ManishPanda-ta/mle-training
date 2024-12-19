@@ -1,6 +1,9 @@
 import os
 import tarfile
 
+import os
+import tarfile
+
 import numpy as np
 import pandas as pd
 from scipy.stats import randint
@@ -18,6 +21,7 @@ HOUSING_PATH = os.path.join("datasets", "housing")
 HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
 
 
+
 def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     os.makedirs(housing_path, exist_ok=True)
     tgz_path = os.path.join(housing_path, "housing.tgz")
@@ -30,6 +34,7 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
 def load_housing_data(housing_path=HOUSING_PATH):
     csv_path = os.path.join(housing_path, "housing.csv")
     return pd.read_csv(csv_path)
+
 
 
 housing = load_housing_data
@@ -72,6 +77,19 @@ compare_props["Rand. %error"] = (
 compare_props["Strat. %error"] = (
     100 * compare_props["Stratified"] / compare_props["Overall"] - 100
 )
+compare_props = pd.DataFrame(
+    {
+        "Overall": income_cat_proportions(housing),
+        "Stratified": income_cat_proportions(strat_test_set),
+        "Random": income_cat_proportions(test_set),
+    }
+).sort_index()
+compare_props["Rand. %error"] = (
+    100 * compare_props["Random"] / compare_props["Overall"] - 100
+)
+compare_props["Strat. %error"] = (
+    100 * compare_props["Stratified"] / compare_props["Overall"] - 100
+)
 
 for set_ in (strat_train_set, strat_test_set):
     set_.drop("income_cat", axis=1, inplace=True)
@@ -96,11 +114,15 @@ housing["population_per_household"] = (
 housing = strat_train_set.drop(
     "median_house_value", axis=1
 )  # drop labels for training set
+housing = strat_train_set.drop(
+    "median_house_value", axis=1
+)  # drop labels for training set
 housing_labels = strat_train_set["median_house_value"].copy()
 
 
 imputer = SimpleImputer(strategy="median")
 
+housing_num = housing.drop("ocean_proximity", axis=1)
 housing_num = housing.drop("ocean_proximity", axis=1)
 
 imputer.fit(housing_num)
@@ -150,8 +172,19 @@ param_distribs = {
     "n_estimators": randint(low=1, high=200),
     "max_features": randint(low=1, high=8),
 }
+    "n_estimators": randint(low=1, high=200),
+    "max_features": randint(low=1, high=8),
+}
 
 forest_reg = RandomForestRegressor(random_state=42)
+rnd_search = RandomizedSearchCV(
+    forest_reg,
+    param_distributions=param_distribs,
+    n_iter=10,
+    cv=5,
+    scoring="neg_mean_squared_error",
+    random_state=42,
+)
 rnd_search = RandomizedSearchCV(
     forest_reg,
     param_distributions=param_distribs,
@@ -169,6 +202,7 @@ for mean_score, params in zip(cvres["mean_test_score"], cvres["params"]):
 param_grid = [
     # try 12 (3×4) combinations of hyperparameters
     {"n_estimators": [3, 10, 30], "max_features": [2, 4, 6, 8]},
+    {"n_estimators": [3, 10, 30], "max_features": [2, 4, 6, 8]},
     # then try 6 (2×3) combinations with bootstrap set as False
     {
         "bootstrap": [False],
@@ -178,6 +212,14 @@ param_grid = [
 ]
 
 forest_reg = RandomForestRegressor(random_state=42)
+# train across 5 folds, that's a total of (12+6)*5=90 rounds of training
+grid_search = GridSearchCV(
+    forest_reg,
+    param_grid,
+    cv=5,
+    scoring="neg_mean_squared_error",
+    return_train_score=True,
+)
 # train across 5 folds, that's a total of (12+6)*5=90 rounds of training
 grid_search = GridSearchCV(
     forest_reg,
@@ -203,7 +245,20 @@ X_test = strat_test_set.drop("median_house_value", axis=1)
 y_test = strat_test_set["median_house_value"].copy()
 
 X_test_num = X_test.drop("ocean_proximity", axis=1)
+X_test_num = X_test.drop("ocean_proximity", axis=1)
 X_test_prepared = imputer.transform(X_test_num)
+X_test_prepared = pd.DataFrame(
+    X_test_prepared, columns=X_test_num.columns, index=X_test.index
+)
+X_test_prepared["rooms_per_household"] = (
+    X_test_prepared["total_rooms"] / X_test_prepared["households"]
+)
+X_test_prepared["bedrooms_per_room"] = (
+    X_test_prepared["total_bedrooms"] / X_test_prepared["total_rooms"]
+)
+X_test_prepared["population_per_household"] = (
+    X_test_prepared["population"] / X_test_prepared["households"]
+)
 X_test_prepared = pd.DataFrame(
     X_test_prepared, columns=X_test_num.columns, index=X_test.index
 )
@@ -226,3 +281,4 @@ X_test_prepared = X_test_prepared.join(
 final_predictions = final_model.predict(X_test_prepared)
 final_mse = mean_squared_error(y_test, final_predictions)
 final_rmse = np.sqrt(final_mse)
+
