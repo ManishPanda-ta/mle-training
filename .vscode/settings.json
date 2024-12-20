@@ -1,0 +1,25 @@
+{
+    "isort.check": true,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.sortImports.path": "isort",
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length",
+        "78"
+    ],
+    "editor.tabSize": 4,
+    "files.trimTrailingWhitespace": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.tabSize": 4,
+        "files.trimTrailingWhitespace": true,
+    },
+    "gitlens.home.preview.enabled": false,
+    "black-formatter.args": [
+        "\"python.formatting.blackArgs\": [\"--line-length\", \"78\"],"
+    ],
+    "files.autoSave": "afterDelay",
+    "git.ignoreLimitWarning": true,
+}
