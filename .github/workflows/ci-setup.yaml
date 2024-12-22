@@ -23,10 +23,10 @@ jobs:
           python-version: 3.8
 
       - name: Create Conda environment
-        run: conda env create -f env.yml
+        run: conda env create -f env.yml -n mle-dev1
 
       - name: Activate Conda environment
-        run: conda activate myenv
+        run: echo "source activate myenv" > $GITHUB_ENV
 
       - name: Install flake8
         run: conda install flake8
