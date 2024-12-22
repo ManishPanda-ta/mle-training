@@ -31,17 +31,23 @@ jobs:
       - name: Activate Conda environment
         run: echo "CONDA_ENV=myenv" >> $GITHUB_ENV
 
+      - name: Verify Conda environment
+        run: conda info --envs
+
       - name: Install flake8
-        run: conda install flake8
-        env:
-          CONDA_ENV: myenv
+        run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          conda install -y flake8
 
       - name: Run flake8
-        run: flake8 .
-        env:
-          CONDA_ENV: myenv
+        run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          flake8 .
 
       - name: Run nonstandardcode.py
-        run: python nonstandardcode.py
-        env:
-          CONDA_ENV: myenv
+        run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          python nonstandardcode.py
