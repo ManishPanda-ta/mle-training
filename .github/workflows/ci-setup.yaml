@@ -21,9 +21,12 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.8
+          
+      - name: Remove existing Conda environment
+        run: conda env remove -n myenv || true
 
       - name: Create Conda environment
-        run: conda env create -f env.yml -n mle-dev1
+        run: conda env create -f env.yml -n myenv
 
       - name: Activate Conda environment
         run: echo "source activate myenv" > $GITHUB_ENV
