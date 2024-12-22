@@ -22,11 +22,11 @@ jobs:
           auto-update-conda: true
           python-version: 3.13
           
-      - name: Remove existing Conda environment
-        run: conda env remove -n myenv || true
+      # - name: Remove existing Conda environment
+      #   run: conda env remove -n myenv || true
 
-      - name: Create Conda environment
-        run: conda env create -f env.yml -n myenv
+      # - name: Create Conda environment
+      #   run: conda env create -f env.yml -n myenv
 
       - name: Activate Conda environment
         run: |
