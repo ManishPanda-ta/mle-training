@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - feat/7/ci-setup
-  # pull_request:
-  #   branches:
-  #     - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -21,12 +21,6 @@ jobs:
         with:
           auto-update-conda: true
           python-version: 3.13
-          
-      # - name: Remove existing Conda environment
-      #   run: conda env remove -n myenv || true
-
-      # - name: Create Conda environment
-      #   run: conda env create -f env.yml -n myenv
 
       - name: Install dependencies from env.yml
         run: |
@@ -39,11 +33,6 @@ jobs:
           source $(conda info --base)/etc/profile.d/conda.sh
           conda activate myenv
           conda list
-
-      # - name: Verify Conda environment
-      #   run: conda list
-      #   env:
-      #     CONDA_ENV: myenv
 
       - name: Install flake8
         run: |
