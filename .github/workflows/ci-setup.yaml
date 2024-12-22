@@ -1,0 +1,38 @@
+name: CI for Conda Environment
+
+on:
+  push:
+    branches:
+      - feature/ci-setup
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: 3.8
+
+      - name: Create Conda environment
+        run: conda env create -f env.yml
+
+      - name: Activate Conda environment
+        run: conda activate myenv
+
+      - name: Install flake8
+        run: conda install flake8
+
+      - name: Run flake8
+        run: flake8 .
+
+      - name: Run nonstandardcode.py
+        run: python nonstandardcode.py
