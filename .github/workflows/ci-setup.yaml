@@ -3,7 +3,7 @@ name: CI for Conda Environment
 on:
   push:
     branches:
-      - feature/ci-setup
+      - feat/7/ci-setup
   pull_request:
     branches:
       - main
