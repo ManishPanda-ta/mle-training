@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - feat/7/ci-setup
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
   build:
@@ -31,6 +31,7 @@ jobs:
       - name: Install dependencies from env.yml
         run: |
           conda env create -f env.yml -n myenv || conda activate myenv
+          conda activate myenv
 
       - name: Activate Conda environment
         run: |
@@ -46,17 +47,17 @@ jobs:
       - name: Install flake8
         run: |
           # source $(conda info --base)/etc/profile.d/conda.sh
-          # conda activate myenv
+          conda activate myenv
           conda install -y flake8
 
       - name: Run flake8
         run: |
-          # source $(conda info --base)/etc/profile.d/conda.sh
-          # conda activate myenv
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
           flake8 .
 
       - name: Run nonstandardcode.py
         run: |
-          # source $(conda info --base)/etc/profile.d/conda.sh
-          # conda activate myenv
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
           python nonstandardcode.py
