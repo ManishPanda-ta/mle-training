@@ -47,7 +47,7 @@ jobs:
 
       - name: Install flake8
         run: |
-          # source $(conda info --base)/etc/profile.d/conda.sh
+          source $(conda info --base)/etc/profile.d/conda.sh
           conda activate myenv
           conda install -y flake8
 
