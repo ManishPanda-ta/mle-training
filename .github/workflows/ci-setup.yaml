@@ -28,30 +28,35 @@ jobs:
       # - name: Create Conda environment
       #   run: conda env create -f env.yml -n myenv
 
+      - name: Install dependencies from env.yml
+        run: |
+          conda env create -f env.yml -n myenv || conda activate myenv
+
       - name: Activate Conda environment
         run: |
           source $(conda info --base)/etc/profile.d/conda.sh
           conda activate myenv
+          conda list
 
-      - name: Verify Conda environment
-        run: conda list
-        env:
-          CONDA_ENV: myenv
+      # - name: Verify Conda environment
+      #   run: conda list
+      #   env:
+      #     CONDA_ENV: myenv
 
       - name: Install flake8
         run: |
-          source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate myenv
+          # source $(conda info --base)/etc/profile.d/conda.sh
+          # conda activate myenv
           conda install -y flake8
 
       - name: Run flake8
         run: |
-          source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate myenv
+          # source $(conda info --base)/etc/profile.d/conda.sh
+          # conda activate myenv
           flake8 .
 
       - name: Run nonstandardcode.py
         run: |
-          source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate myenv
+          # source $(conda info --base)/etc/profile.d/conda.sh
+          # conda activate myenv
           python nonstandardcode.py
