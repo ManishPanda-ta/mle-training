@@ -29,13 +29,17 @@ jobs:
         run: conda env create -f env.yml -n myenv
 
       - name: Activate Conda environment
-        run: echo "source activate myenv" > $GITHUB_ENV
+        run: echo "CONDA_ENV=myenv" >> $GITHUB_ENV
 
       - name: Install flake8
         run: conda install flake8
+        env:
+          CONDA_ENV: myenv
 
       - name: Run flake8
         run: flake8 .
 
       - name: Run nonstandardcode.py
         run: python nonstandardcode.py
+        env:
+          CONDA_ENV: myenv
