@@ -20,7 +20,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          python-version: 3.8
+          python-version: 3.13
           
       - name: Remove existing Conda environment
         run: conda env remove -n myenv || true
@@ -29,10 +29,14 @@ jobs:
         run: conda env create -f env.yml -n myenv
 
       - name: Activate Conda environment
-        run: echo "CONDA_ENV=myenv" >> $GITHUB_ENV
+        run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
 
       - name: Verify Conda environment
-        run: conda info --envs
+        run: conda list
+        env:
+          CONDA_ENV: myenv
 
       - name: Install flake8
         run: |
