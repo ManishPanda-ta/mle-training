@@ -9,7 +9,7 @@ on:
   #     - feat/9/python-packaging
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
