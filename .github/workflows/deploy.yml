@@ -97,11 +97,11 @@ jobs:
 
     - name: Set PYTHONPATH to include src directory
       run: |
-        export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
+        export PYTHONPATH=$(pwd)/python-pack-assign/src/:$PYTHONPATH
         echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
 
     - name: List files in dist directory
-      run: ls -la $(pwd)/python-pack-assign/src/
+      run: ls -la $(pwd)/python-pack-assign/src/python-package/
 
     - name: Run nonstandardcode.py
       run: |
