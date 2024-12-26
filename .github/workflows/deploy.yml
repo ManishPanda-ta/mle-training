@@ -116,6 +116,7 @@ jobs:
 
     - name: Run nonstandardcode.py
       run: |
-        # source $(conda info --base)/etc/profile.d/conda.sh
-        # conda activate myenv
+        source $(conda info --base)/etc/profile.d/conda.sh
+        conda activate myenv
         python -m python_package.nonstandardcode
+      working-directory: python-pack-assign/src
