@@ -96,4 +96,4 @@ jobs:
       run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
 
     - name: Run nonstandardcode.py
-      run: python -m python-pack-assign.src.python_package.nonstandardcode
+      run: python -m python-pack-assign/src/python_package.nonstandardcode
