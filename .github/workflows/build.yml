@@ -36,7 +36,7 @@ jobs:
       run: pwd
   
     - name: Build package
-      run: python python-pack-assign/src/setup.py sdist bdist_wheel
+      run: python ./python-pack-assign/src/setup.py sdist bdist_wheel
 
     - name: Display directory tree after build
       run: tree
