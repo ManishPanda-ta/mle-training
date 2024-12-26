@@ -24,12 +24,10 @@ jobs:
         auto-update-conda: true
         python-version: 3.13
 
-    # - name: List files in dist directory
-    #   run: ls -la python-pack-assign/dist/
     - name: Print working directory
       run: pwd
-    - name: List files in current directory
-      run: ls -la
+    - name: List files in dist directory
+      run: ls -la python-pack-assign/
 
 
     - name: Download build artifacts
