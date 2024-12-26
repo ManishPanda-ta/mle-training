@@ -101,7 +101,7 @@ jobs:
         echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
 
     - name: List files in dist directory
-      run: ls -la python-pack-assign/
+      run: ls -la
 
     - name: Run nonstandardcode.py
       run: |
