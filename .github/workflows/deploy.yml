@@ -98,4 +98,8 @@ jobs:
     - name: Set PYTHONPATH to include src directory
       run: |
         export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
-        python -m python_package.nonstandardcode
+        echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
+
+    - name: Run nonstandardcode.py
+      run: |
+        python -m python_package.nonstandardcode  # Run the module from python_package
