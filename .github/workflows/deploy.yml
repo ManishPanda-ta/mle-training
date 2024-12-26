@@ -118,4 +118,4 @@ jobs:
       run: |
         source $(conda info --base)/etc/profile.d/conda.sh
         conda activate myenv
-        python -m python-package.nonstandardcode  # Run the module from python_package
+        python -m python_package.nonstandardcode  # Run the module from python_package
