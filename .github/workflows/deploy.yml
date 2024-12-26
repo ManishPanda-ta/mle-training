@@ -1,14 +1,16 @@
 name : Deploy Package
 
 on:
-  push:
-    branches:
-      - feat/9/python-packaging
+  repository_dispatch:
+    types: [deploy]
+  # push:
+  #   branches:
+  #     - feat/9/python-packaging
 
-  workflow_run:
-    workflows: ["Build Package"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["Build Package"]
+  #   types:
+  #     - completed
 
 jobs:
   deploy:
