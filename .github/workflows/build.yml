@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - feat/9/python-packaging
-  # pull_request:
-  #   branches:
-  #     - feat/9/python-packaging
 
 jobs:
   deploy:
