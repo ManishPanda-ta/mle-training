@@ -80,6 +80,11 @@ jobs:
           conda env create -f env.yml -n myenv || conda activate myenv
           conda activate myenv
 
+    - name: Activate Conda environment
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          conda list
     - name: Print working directory
       run: pwd
     - name: List files in dist directory
@@ -111,4 +116,6 @@ jobs:
 
     - name: Run nonstandardcode.py
       run: |
+        source $(conda info --base)/etc/profile.d/conda.sh
+        conda activate myenv
         python -m python-package.nonstandardcode  # Run the module from python_package
