@@ -24,6 +24,11 @@ jobs:
         auto-update-conda: true
         python-version: 3.13
 
+    - name: List files in dist directory
+      run: ls -la python-pack-assign/dist/
+    - name: List files in current directory
+      run: ls -la
+
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
