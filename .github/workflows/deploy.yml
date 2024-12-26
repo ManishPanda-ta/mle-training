@@ -105,4 +105,4 @@ jobs:
 
     - name: Run nonstandardcode.py
       run: |
-        python -m python_package.nonstandardcode  # Run the module from python_package
+        python -m python_package.nonstandardcode.py  # Run the module from python_package
