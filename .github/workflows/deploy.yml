@@ -31,7 +31,7 @@ jobs:
         path: python-pack-assign/dist/
 
     - name: Install package
-      run: pip install dist/python_package-0.1-py3-none-any.whl
+      run: pip install dist/python_pack_assign-0.1-py3-none-any.whl
 
     - name: Run nonstandardcode.py
       run: python -m your_package.nonstandardcode
