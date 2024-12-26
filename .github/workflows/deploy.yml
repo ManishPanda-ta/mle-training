@@ -14,7 +14,8 @@ on:
 
 jobs:
   job1:
-  build:
+    name: build job
+  # build:
     runs-on: ubuntu-latest
 
     steps:
@@ -58,7 +59,9 @@ jobs:
 
 
   job2:
-  deploy:
+    name: deploy job
+    needs: job1
+  # deploy:
     runs-on: ubuntu-latest
 
     steps:
