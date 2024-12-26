@@ -39,7 +39,7 @@ jobs:
       run: ls -la
 
     - name: Build package
-      run: python python-pack-assign/setup.py sdist bdist_wheel
+      run: python setup.py sdist bdist_wheel
       working-directory: python-pack-assign
 
     - name: Display directory tree after build
