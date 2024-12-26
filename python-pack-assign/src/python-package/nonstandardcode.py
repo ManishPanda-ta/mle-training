@@ -1,6 +1,7 @@
 import os
 import tarfile
 
+# import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy.stats import randint
@@ -26,7 +27,9 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     tgz_path = os.path.join(housing_path, "housing.tgz")
     urllib.request.urlretrieve(housing_url, tgz_path)
     housing_tgz = tarfile.open(tgz_path)
-    housing_tgz.extractall(path=housing_path)
+    housing_tgz.extractall(
+        path=housing_path, filter="data"
+    )  # added filter parameter due to depreciation warning
     housing_tgz.close()
 
 
@@ -35,7 +38,9 @@ def load_housing_data(housing_path=HOUSING_PATH):
     return pd.read_csv(csv_path)
 
 
-housing = load_housing_data
+# Fetch the data
+fetch_housing_data()
+housing = load_housing_data()
 
 train_set, test_set = train_test_split(
     housing, test_size=0.2, random_state=42
@@ -85,6 +90,7 @@ compare_props = pd.DataFrame(
 compare_props["Rand. %error"] = (
     100 * compare_props["Random"] / compare_props["Overall"] - 100
 )
+
 compare_props["Strat. %error"] = (
     100 * compare_props["Stratified"] / compare_props["Overall"] - 100
 )
@@ -95,8 +101,14 @@ for set_ in (strat_train_set, strat_test_set):
 housing = strat_train_set.copy()
 housing.plot(kind="scatter", x="longitude", y="latitude")
 housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
+# plt.show()
 
-corr_matrix = housing.corr()
+# Drop non-numeric columns
+housing_num = housing.select_dtypes(include=[np.number])
+
+# Calculate the correlation matrix
+corr_matrix = housing_num.corr()
+print(corr_matrix["median_house_value"].sort_values(ascending=False))
 corr_matrix["median_house_value"].sort_values(ascending=False)
 housing["rooms_per_household"] = (
     housing["total_rooms"] / housing["households"]
