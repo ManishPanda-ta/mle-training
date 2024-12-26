@@ -82,9 +82,15 @@ jobs:
 
     - name: Download build artifacts
       uses: actions/download-artifact@v4
-      # with:
-      #   name: build-artifacts
-      #   path: python-pack-assign/dist/
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
+
+    - name: List files in current directory
+      run: ls -la
+
+    - name: Display directory tree after build
+      run: tree
 
     - name: Install package
       run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
