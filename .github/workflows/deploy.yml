@@ -1,0 +1,27 @@
+name: Deploy Package
+
+on:
+  push:
+    branches:
+      - feat/9/python-packaging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: 3.11
+    - name: Download build artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: build-artifacts
+        path: dist/
+    - name: Install package
+      run: pip install dist/your_package-0.1-py3-none-any.whl
+    - name: Run nonstandardcode.py
+      run: python -m your_package.nonstandardcode

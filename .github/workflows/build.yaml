@@ -1,0 +1,32 @@
+name: Build Package
+
+on:
+  push:
+    branches:
+      - feat/9/python-packaging
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install tree CLI tool
+      run: sudo apt-get install tree
+    - name: Display directory tree before build
+      run: tree
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
+    - name: Install dependencies
+      run: pip install setuptools wheel
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+    - name: Display directory tree after build
+      run: tree
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-artifacts
+        path: dist/
