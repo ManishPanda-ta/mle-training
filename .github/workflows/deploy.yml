@@ -13,7 +13,7 @@ on:
   #     - completed
 
 jobs:
-  job1:
+  build:
     name: build job
   # build:
     runs-on: ubuntu-latest
@@ -58,9 +58,9 @@ jobs:
         path: python-pack-assign/dist/
 
 
-  job2:
+  deploy:
     name: deploy job
-    needs: job1
+    needs: build
   # deploy:
     runs-on: ubuntu-latest
 
