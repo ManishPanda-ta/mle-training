@@ -118,5 +118,4 @@ jobs:
       run: |
         source $(conda info --base)/etc/profile.d/conda.sh
         conda activate myenv
-        python -c "import python_package.nonstandardcode"
-        python -m python_package.nonstandardcode  # Run the module from python_package
+        conda -m python_package.nonstandardcode
