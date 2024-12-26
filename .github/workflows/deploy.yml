@@ -100,6 +100,9 @@ jobs:
         export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
         echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
 
+    - name: List files in dist directory
+      run: ls -la python-pack-assign/
+
     - name: Run nonstandardcode.py
       run: |
         python -m python_package.nonstandardcode  # Run the module from python_package
