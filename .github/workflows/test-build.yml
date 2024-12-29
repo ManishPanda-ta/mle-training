@@ -5,10 +5,10 @@ on:
   #   types: [deploy]
   push:
     branches:
-      - feat/9/python-packaging
+      - enh/11/testing-build
   pull_request:
     branches:
-      - feat/9/python-packaging
+      - enh/11/testing-build
 
   # workflow_run:
   #   workflows: ["Build Package"]
