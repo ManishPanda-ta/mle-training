@@ -1,9 +1,12 @@
-name : Deploy Package
+name : Build and Test
 
 on:
   # repository_dispatch:
   #   types: [deploy]
   push:
+    branches:
+      - feat/9/python-packaging
+  pull_request:
     branches:
       - feat/9/python-packaging
 
@@ -120,3 +123,10 @@ jobs:
         conda activate myenv
         python -m python_package.nonstandardcode
       working-directory: python-pack-assign/src
+
+    - name: Run tests
+      run: |
+        source $(conda info --base)/etc/profile.d/conda.sh
+        conda activate myenv
+        pytest tests/
+      working-directory: python-pack-assign

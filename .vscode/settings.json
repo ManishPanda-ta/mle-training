@@ -17,9 +17,12 @@
         "files.trimTrailingWhitespace": true,
     },
     "gitlens.home.preview.enabled": false,
-    "black-formatter.args": [
-        "\"python.formatting.blackArgs\": [\"--line-length\", \"78\"],"
-    ],
+    // "black-formatter.args": [
+    //     "\"python.formatting.blackArgs\": [\"--line-length\", \"78\"],"
+    // ],
     "files.autoSave": "afterDelay",
     "git.ignoreLimitWarning": true,
+    "python.analysis.extraPaths": [
+        "./python-pack-assign/src"
+    ],
 }
