@@ -60,7 +60,7 @@ jobs:
         path: python-pack-assign/dist/
 
   validate:
-    name: Validation Job
+    name: validate Job
     needs: build
     runs-on: ubuntu-latest
 
@@ -109,7 +109,7 @@ jobs:
 
   deploy:
     name: deploy job
-    needs: build
+    needs: validate
     runs-on: ubuntu-latest
 
     steps:
