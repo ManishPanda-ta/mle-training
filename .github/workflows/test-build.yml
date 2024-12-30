@@ -109,7 +109,7 @@ jobs:
 
   deploy:
     name: deploy job
-    needs: build
+    needs: validate
     runs-on: ubuntu-latest
 
     steps:
