@@ -15,4 +15,4 @@ venv/
 *.log
 
 # Ignore datasets
-datasets/
+datasets
