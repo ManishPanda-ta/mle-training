@@ -1,0 +1,122 @@
+name : Deploy Package
+
+on:
+  # repository_dispatch:
+  #   types: [deploy]
+  push:
+    branches:
+      - feat/9/python-packaging
+
+  # workflow_run:
+  #   workflows: ["Build Package"]
+  #   types:
+  #     - completed
+
+jobs:
+  build:
+    name: build job
+  # build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install tree CLI tool
+      run: sudo apt-get install tree
+
+    - name: Display directory tree before build
+      run: tree
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.12
+
+    - name: Install dependencies
+      run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel
+
+    - name: Print working directory
+      run: pwd
+
+    - name: List files in current directory
+      run: ls -la
+
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+      working-directory: python-pack-assign
+
+    - name: Display directory tree after build
+      run: tree
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
+
+
+  deploy:
+    name: deploy job
+    needs: build
+  # deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: 3.13
+
+    - name: Install dependencies from env.yml
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda env create -f env.yml -n myenv || conda activate myenv
+          conda activate myenv
+
+    - name: Activate Conda environment
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          conda list
+    - name: Print working directory
+      run: pwd
+    - name: List files in dist directory
+      run: ls -la python-pack-assign/
+
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
+
+    - name: List files in current directory
+      run: ls -la
+
+    - name: Display directory tree after build
+      run: tree
+
+    - name: Install package
+      run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
+
+    - name: Set PYTHONPATH to include src directory
+      run: |
+        export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
+        echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
+
+    - name: List files in dist directory
+      run: ls -la $(pwd)/python-pack-assign/src/python_package/
+
+    - name: Run nonstandardcode.py
+      run: |
+        source $(conda info --base)/etc/profile.d/conda.sh
+        conda activate myenv
+        python -m python_package.nonstandardcode
+      working-directory: python-pack-assign/src
