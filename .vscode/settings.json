@@ -1,14 +1,20 @@
 {
     "isort.check": true,
-    "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.sortImports.path": "isort",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
     "editor.formatOnSave": true,
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": [
         "--line-length",
         "78"
     ],
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "isort.args": ["--profile", "black"],
     "editor.tabSize": 4,
     "files.trimTrailingWhitespace": true,
     "[python]": {
@@ -17,12 +23,16 @@
         "files.trimTrailingWhitespace": true,
     },
     "gitlens.home.preview.enabled": false,
-    // "black-formatter.args": [
-    //     "\"python.formatting.blackArgs\": [\"--line-length\", \"78\"],"
-    // ],
-    "files.autoSave": "afterDelay",
-    "git.ignoreLimitWarning": true,
     "python.analysis.extraPaths": [
         "./python-pack-assign/src"
+    "files.autoSave": "afterDelay",
+    "git.ignoreLimitWarning": true,
+    "black-formatter.args": [
+        "--line-length",
+        "78"
+    ],
+    "flake8.args": [
+        "--max-line-length",
+        "78"
     ],
 }
