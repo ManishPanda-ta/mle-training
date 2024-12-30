@@ -13,3 +13,7 @@ venv/
 # Ignore other files or directories
 .DS_Store
 *.log
+
+# Ignore datasets
+datasets/
+
