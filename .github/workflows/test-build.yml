@@ -59,53 +59,53 @@ jobs:
         name: build-artifacts
         path: python-pack-assign/dist/
 
-  # validate:
-  #   name: validate Job
-  #   needs: build
-  #   runs-on: ubuntu-latest
+  validate:
+    name: validate Job
+    needs: build
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-  #   - name: Set up Conda
-  #     uses: conda-incubator/setup-miniconda@v2
-  #     with:
-  #       auto-update-conda: true
-  #       python-version: 3.13
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: 3.13
 
-  #   - name: Install dependencies from env.yml
-  #     run: |
-  #         source $(conda info --base)/etc/profile.d/conda.sh
-  #         conda env create -f env.yml -n myenv || conda activate myenv
-  #         conda activate myenv
+    - name: Install dependencies from env.yml
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda env create -f env.yml -n myenv || conda activate myenv
+          conda activate myenv
 
-  #   - name: Activate Conda environment
-  #     run: |
-  #         source $(conda info --base)/etc/profile.d/conda.sh
-  #         conda activate myenv
-  #         conda list
+    - name: Activate Conda environment
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          conda list
 
-  #   - name: Download build artifacts
-  #     uses: actions/download-artifact@v4
-  #     with:
-  #       name: build-artifacts
-  #       path: python-pack-assign/dist/
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
 
-  #   - name: Install package
-  #     run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
+    - name: Install package
+      run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
 
-  #   - name: Set PYTHONPATH to include src directory
-  #     run: |
-  #       export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
-  #       echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
+    - name: Set PYTHONPATH to include src directory
+      run: |
+        export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
+        echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
 
-  #   - name: Run tests
-  #     run: |
-  #       source $(conda info --base)/etc/profile.d/conda.sh
-  #       conda activate myenv
-  #       pytest tests/
-  #     working-directory: python-pack-assign
+    - name: Run tests
+      run: |
+        source $(conda info --base)/etc/profile.d/conda.sh
+        conda activate myenv
+        pytest tests/
+      working-directory: python-pack-assign
 
   deploy:
     name: deploy job
@@ -169,9 +169,9 @@ jobs:
         python -m python_package.nonstandardcode
       working-directory: python-pack-assign/src
 
-    - name: Run tests
-      run: |
-        source $(conda info --base)/etc/profile.d/conda.sh
-        conda activate myenv
-        pytest tests/
-      working-directory: python-pack-assign
+    # - name: Run tests
+    #   run: |
+    #     source $(conda info --base)/etc/profile.d/conda.sh
+    #     conda activate myenv
+    #     pytest tests/
+    #   working-directory: python-pack-assign
