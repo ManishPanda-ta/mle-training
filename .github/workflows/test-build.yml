@@ -80,7 +80,7 @@ jobs:
     - name: Install dependencies from env.yml
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda env create -f env.yml -n myenv || conda activate myenv
+          # conda env create -f env.yml -n myenv || conda activate myenv
           conda activate myenv
 
     - name: Activate Conda environment
