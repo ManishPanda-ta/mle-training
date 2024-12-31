@@ -68,8 +68,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - name: Checkout code
-    #   uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Set up Conda
       uses: conda-incubator/setup-miniconda@v2
@@ -77,17 +77,17 @@ jobs:
         auto-update-conda: true
         python-version: 3.13
 
-    # - name: Install dependencies from env.yml
-    #   run: |
-    #       source $(conda info --base)/etc/profile.d/conda.sh
-    #       # conda env create -f env.yml -n myenv || conda activate myenv
-    #       conda activate myenv
+    - name: Install dependencies from env.yml
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          # conda env create -f env.yml -n myenv || conda activate myenv
+          conda activate myenv
 
-    # - name: Activate Conda environment
-    #   run: |
-    #       source $(conda info --base)/etc/profile.d/conda.sh
-    #       conda activate myenv
-    #       conda list
+    - name: Activate Conda environment
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          conda list
 
     - name: Download build artifacts
       uses: actions/download-artifact@v4
