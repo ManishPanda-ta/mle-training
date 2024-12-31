@@ -23,7 +23,8 @@
         "files.trimTrailingWhitespace": true,
     },
     "gitlens.home.preview.enabled": false,
-
+    "python.analysis.extraPaths": [
+        "./python-pack-assign/src"
     "files.autoSave": "afterDelay",
     "git.ignoreLimitWarning": true,
     "black-formatter.args": [
