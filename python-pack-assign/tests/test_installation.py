@@ -17,7 +17,7 @@ def test_package_installation():
                 os.path.join(os.path.dirname(__file__), "../src")
             ),
         )
-        import python_package
+        import python_package  # noqa: F401
 
         assert True
     except ImportError:
