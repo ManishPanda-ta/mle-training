@@ -9,12 +9,13 @@ from six.moves import urllib  # type: ignore
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.model_selection import (
+    GridSearchCV,
+    RandomizedSearchCV,
+    StratifiedShuffleSplit,
+    train_test_split,
+)
 from sklearn.tree import DecisionTreeRegressor
 
 DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
@@ -132,7 +133,6 @@ housing_labels = strat_train_set["median_house_value"].copy()
 
 imputer = SimpleImputer(strategy="median")
 
-housing_num = housing.drop("ocean_proximity", axis=1)
 housing_num = housing.drop("ocean_proximity", axis=1)
 
 imputer.fit(housing_num)
@@ -278,6 +278,7 @@ X_test_prepared["bedrooms_per_room"] = (
 X_test_prepared["population_per_household"] = (
     X_test_prepared["population"] / X_test_prepared["households"]
 )
+
 
 X_test_cat = X_test[["ocean_proximity"]]
 X_test_prepared = X_test_prepared.join(

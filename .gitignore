@@ -16,6 +16,3 @@ venv/
 
 # Ignore datasets
 datasets/
-
-# Ignore datasets
-datasets/
