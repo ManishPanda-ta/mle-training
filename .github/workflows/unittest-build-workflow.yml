@@ -29,8 +29,6 @@ jobs:
           conda activate myenv
           conda install -c conda-forge setuptools wheel
 
-        # pip install -e .
-
     - name: Install tree
       run: sudo apt-get install tree
 
@@ -81,7 +79,7 @@ jobs:
         path: python-pack-assign/dist/
 
     - name: Install package
-      run: pip install -e python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
+      run: pip install -e .
 
     - name: Lint with flake8
       run: |
