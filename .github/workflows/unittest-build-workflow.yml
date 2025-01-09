@@ -93,6 +93,8 @@ jobs:
         conda activate myenv
         export PYTHONPATH=src
         pytest tests/
+      working-directory: python-pack-assign
+
 
     - name: Install tree
       run: sudo apt-get install tree
