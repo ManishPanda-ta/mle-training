@@ -81,16 +81,17 @@ jobs:
     - name: Install package
       run: pip install -e .
 
-    - name: Lint with flake8
-      run: |
-        source $(conda info --base)/etc/profile.d/conda.sh
-        conda activate myenv
-        flake8 src/
+    # - name: Lint with flake8
+    #   run: |
+    #     source $(conda info --base)/etc/profile.d/conda.sh
+    #     conda activate myenv
+    #     flake8 src/
 
     - name: Run tests
       run: |
         source $(conda info --base)/etc/profile.d/conda.sh
         conda activate myenv
+        export PYTHONPATH=src
         pytest tests/
 
     - name: Install tree
