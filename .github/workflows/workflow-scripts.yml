@@ -108,13 +108,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: build-artifacts
-        path: python-pack-assign/dist/
-
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -127,9 +120,9 @@ jobs:
         auto-update-conda: true
         python-version: 3.13
 
-    -  run: |
-          conda info
-          conda list
+    - run: |
+        conda info
+        conda list
 
     - name: Install dependencies from env.yml
       run: |
@@ -142,12 +135,20 @@ jobs:
           source $(conda info --base)/etc/profile.d/conda.sh
           conda activate myenv
           conda list
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
+
     - name: List dist directory
       run: |
-        ls -l dist
+        ls -l python-pack-assign dist
 
     - name: Install package
       run: pip install dist/*.whl
+
     - name: Set PYTHONPATH to include src directory
       run: |
         export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
