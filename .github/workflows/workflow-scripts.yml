@@ -154,10 +154,10 @@ jobs:
       run: |
         source $(conda info --base)/etc/profile.d/conda.sh
         conda activate myenv
-        python scripts/ingest_data.py -h
-        python scripts/ingest_data.py datasets/housing
-        python scripts/train.py -h
-        python scripts/train.py datasets/housing datasets/models
-        python scripts/score.py -h
-        python scripts/score.py datasets/models datasets/housing datasets/output
+        python scripts/ingest_data_run.py -h
+        python scripts/ingest_data_run.py datasets/housing
+        python scripts/train_run.py -h
+        python scripts/train_run.py datasets/housing datasets/models
+        python scripts/score_run.py -h
+        python scripts/score_run.py datasets/models datasets/housing datasets/output
       working-directory: python-pack-assign/src
