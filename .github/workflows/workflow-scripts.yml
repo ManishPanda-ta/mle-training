@@ -165,4 +165,4 @@ jobs:
         python src/scripts/train_run.py datasets/housing datasets/models
         python src/scripts/score_run.py -h
         python src/scripts/score_run.py datasets/models datasets/housing datasets/output
-      working-directory: python-pack-assign/
+      working-directory: python-pack-assign
