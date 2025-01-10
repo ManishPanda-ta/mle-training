@@ -145,7 +145,9 @@ jobs:
     # - name: Install package
     #   run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
     - name: Install package in editable mode
-      run: pip install -e .  # Make sure this step is used instead of installing the wheel
+      run: |
+          pip install -e .  # Make sure this step is used instead of installing the wheel
+          python -c 'import python_package; print("Package found!")'
       working-directory: python-pack-assign
 
     - name: Print working directory
@@ -163,6 +165,7 @@ jobs:
       run: |
         source $(conda info --base)/etc/profile.d/conda.sh
         conda activate myenv
+        python -c 'import sys; print(sys.path)'     # Print sys.path for debugging
         python scripts/data_ingest_run.py -h
         python scripts/data_ingest_run.py datasets/housing
         python scripts/train_run.py -h
