@@ -144,7 +144,7 @@ jobs:
 
     - name: List dist directory
       run: |
-        ls -l python-pack-assign dist
+        ls -l python-pack-assign
 
     - name: Install package
       run: pip install dist/*.whl
