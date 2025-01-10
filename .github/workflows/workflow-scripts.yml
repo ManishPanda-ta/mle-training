@@ -165,5 +165,6 @@ jobs:
         python scripts/train_run.py datasets/housing datasets/models
         python scripts/score_run.py -h
         python scripts/score_run.py datasets/models datasets/housing datasets/output
+      working-directory: python-pack-assign
       # env:
       #   PYTHONPATH: ${{ github.workspace }}
