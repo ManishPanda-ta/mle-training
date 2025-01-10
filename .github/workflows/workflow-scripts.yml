@@ -115,15 +115,15 @@ jobs:
         name: build-artifacts
         path: python-pack-assign/dist/
 
-    # - name: Checkout code
-    #   uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Set up Conda
       uses: conda-incubator/setup-miniconda@v2
       with:
-        activate-environment: myenv
-        environment-file: ../env.yml
-        auto-activate-base: false
+        # activate-environment: myenv
+        # environment-file: ../env.yml
+        # auto-activate-base: false
         auto-update-conda: true
         python-version: 3.13
 
@@ -131,17 +131,17 @@ jobs:
           conda info
           conda list
 
-    # - name: Install dependencies from env.yml
-    #   run: |
-    #       source $(conda info --base)/etc/profile.d/conda.sh
-    #       conda env create -f env.yml -n myenv || conda activate myenv
-    #       conda activate myenv
+    - name: Install dependencies from env.yml
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda env create -f env.yml -n myenv || conda activate myenv
+          conda activate myenv
 
-    # - name: Activate Conda environment
-    #   run: |
-    #       source $(conda info --base)/etc/profile.d/conda.sh
-    #       conda activate myenv
-    #       conda list
+    - name: Activate Conda environment
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          conda list
 
     - name: Install package
       run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
