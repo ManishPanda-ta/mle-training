@@ -146,8 +146,7 @@ jobs:
     #   run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
     - name: Install package in editable mode
       run: |
-          pip install -e .  # Make sure this step is used instead of installing the wheel
-          python -c 'import python_package; print("Package found!")'
+          pip install -e .
       working-directory: python-pack-assign
 
     - name: Print working directory
@@ -158,7 +157,11 @@ jobs:
       run: |
           export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
           echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
-        # export PYTHONPATH=$(pwd)/python-pack-assign:$PYTHONPATH
+          python -c 'import sys; print(sys.path)'  # Debugging step to confirm sys.path
+
+    - name: Check if python_package can be imported
+      run: |
+          python -c 'import python_package; print("python_package is available")'  # Verify the package import
 
 
     - name: Run Workflow Scripts
