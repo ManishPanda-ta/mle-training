@@ -165,5 +165,5 @@ jobs:
         python scripts/train_run.py datasets/housing datasets/models
         python scripts/score_run.py -h
         python scripts/score_run.py datasets/models datasets/housing datasets/output
-      env:
-        PYTHONPATH: ${{ github.workspace }}
+      # env:
+      #   PYTHONPATH: ${{ github.workspace }}
