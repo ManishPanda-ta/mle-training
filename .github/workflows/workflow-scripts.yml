@@ -142,10 +142,12 @@ jobs:
           source $(conda info --base)/etc/profile.d/conda.sh
           conda activate myenv
           conda list
+    - name: List dist directory
+      run: |
+        ls -l dist
 
     - name: Install package
-      run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
-
+      run: pip install dist/*.whl
     - name: Set PYTHONPATH to include src directory
       run: |
         export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
