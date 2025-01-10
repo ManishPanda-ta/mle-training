@@ -152,8 +152,9 @@ jobs:
     - name: Set PYTHONPATH to include src directory
       run: |
           export PYTHONPATH=$(pwd):$PYTHONPATH
+          echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
         # export PYTHONPATH=$(pwd)/python-pack-assign:$PYTHONPATH
-        # echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
+
 
     - name: Run Workflow Scripts
       run: |
