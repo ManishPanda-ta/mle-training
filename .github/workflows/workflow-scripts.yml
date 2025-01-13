@@ -26,13 +26,13 @@ jobs:
     - name: Install dependencies from env.yml
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda env create -f env.yml -n myenv || conda activate myenv
-          conda activate myenv
+          conda env create -f env.yml -n mle-dev || conda activate mle-dev
+          conda activate mle-dev
 
     - name: Activate Conda environment
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate myenv
+          conda activate mle-dev
           conda list
 
     - name: Install tree
@@ -51,7 +51,7 @@ jobs:
     - name: Run unit tests
       run: |
         source $(conda info --base)/etc/profile.d/conda.sh
-        conda activate myenv
+        conda activate mle-dev
         export PYTHONPATH=src
         pytest tests/unit_tests/
       working-directory: python-pack-assign
@@ -76,8 +76,8 @@ jobs:
     - name: Create environment and install dependencies from env.yml
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda env create -f env.yml -n myenv || conda activate myenv
-          conda activate myenv
+          conda env create -f env.yml -n mle-dev || conda activate mle-dev
+          conda activate mle-dev
           conda install -c conda-forge setuptools wheel
 
     - name: Build package
@@ -90,7 +90,7 @@ jobs:
     - name: Run Installation tests
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate myenv
+          conda activate mle-dev
           export PYTHONPATH=src
           pytest tests/test_installation.py
       working-directory: python-pack-assign
@@ -114,7 +114,7 @@ jobs:
     - name: Set up Conda
       uses: conda-incubator/setup-miniconda@v2
       with:
-        # activate-environment: myenv
+        # activate-environment: mle-dev
         # environment-file: ../env.yml
         # auto-activate-base: false
         auto-update-conda: true
@@ -127,13 +127,13 @@ jobs:
     - name: Install dependencies from env.yml
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda env create -f env.yml -n myenv || conda activate myenv
-          conda activate myenv
+          conda env create -f env.yml -n mle-dev || conda activate mle-dev
+          conda activate mle-dev
 
     - name: Activate Conda environment
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate myenv
+          conda activate mle-dev
           conda list
 
     - name: Download build artifacts
@@ -156,7 +156,7 @@ jobs:
     - name: Set PYTHONPATH to include src directory
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate myenv
+          conda activate mle-dev
           export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
           echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
           python -c 'import sys; print(sys.path)'  # Debugging step to confirm sys.path
@@ -164,15 +164,16 @@ jobs:
     - name: Check if python_package can be imported
       run: |
           source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate myenv
+          conda activate mle-dev
           python -c 'import python_package; print("python_package is available")'  # Verify the package import
 
 
     - name: Run Workflow Scripts
       run: |
         source $(conda info --base)/etc/profile.d/conda.sh
-        conda activate myenv
-        python -c 'import sys; print(sys.path)'     # Print sys.path for debugging
+        source ~/.bashrc
+        conda activate mle-dev
+        # python -c 'import sys; print(sys.path)'     # Print sys.path for debugging
         python scripts/data_ingest_run.py -h
         python scripts/data_ingest_run.py datasets/housing
         python scripts/train_run.py -h
