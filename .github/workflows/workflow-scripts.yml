@@ -155,8 +155,6 @@ jobs:
 
     - name: Set PYTHONPATH to include src directory
       run: |
-          source $(conda info --base)/etc/profile.d/conda.sh
-          conda activate mle-dev
           export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
           echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
           python -c 'import sys; print(sys.path)'  # Debugging step to confirm sys.path
