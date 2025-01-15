@@ -171,7 +171,7 @@ jobs:
         # source ~/.bashrc
         # conda activate mle-dev
         # python -c 'import sys; print(sys.path)'     # Print sys.path for debugging
-        source python scripts/data_ingest_run.py -h
+        python scripts/data_ingest_run.py -h
         python scripts/data_ingest_run.py datasets/housing
         python scripts/train_run.py -h
         python scripts/train_run.py datasets/housing datasets/models
