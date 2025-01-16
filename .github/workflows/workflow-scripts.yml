@@ -122,7 +122,7 @@ jobs:
         environment-file: env.yml
         auto-activate-base: false
         auto-update-conda: true
-        python-version: 3.11
+        python-version: 3.13
 
     - run: |
         conda info
