@@ -6,7 +6,7 @@ on:
       - enh/17/workflow-scripts
   pull_request:
     branches:
-      - enh/17/workflow-scripts
+      - main
 
 jobs:
   unit-test:
@@ -173,10 +173,6 @@ jobs:
 
     - name: Run Workflow Scripts
       run: |
-        # source $(conda info --base)/etc/profile.d/conda.sh
-        # source ~/.bashrc
-        # conda activate mle-dev
-        # python -c 'import sys; print(sys.path)'     # Print sys.path for debugging
         python scripts/data_ingest_run.py -h
         python scripts/data_ingest_run.py datasets/housing
         python scripts/train_run.py -h
@@ -188,33 +184,33 @@ jobs:
       #   PYTHONPATH: ${{ github.workspace }}
 
 
-  conda-test:
-    name: Test Conda setup
-    runs-on: ubuntu-latest
-    defaults:
-        run:
-          shell: bash -el {0}
+  # conda-test:
+  #   name: Test Conda setup
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #       run:
+  #         shell: bash -el {0}
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
 
-    - name: Set up Conda
-      uses: conda-incubator/setup-miniconda@v3
-      with:
-        installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
-        activate-environment: mle-dev
-        environment-file: env.yml
-        auto-activate-base: false
-        # auto-update-conda: true
-        python-version: 3.13
+  #   - name: Set up Conda
+  #     uses: conda-incubator/setup-miniconda@v3
+  #     with:
+  #       installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
+  #       activate-environment: mle-dev
+  #       environment-file: env.yml
+  #       auto-activate-base: false
+  #       # auto-update-conda: true
+  #       python-version: 3.13
 
-    - name: Check conda setup
-      run: |
-        conda info
-        conda list
-        conda env list
-        pip list
+  #   - name: Check conda setup
+  #     run: |
+  #       conda info
+  #       conda list
+  #       conda env list
+  #       pip list
 
 
 
