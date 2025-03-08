@@ -1,0 +1,41 @@
+name: Docs Build
+
+on:
+  push:
+    branches:
+      - enh/21/sphinx-documentation
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        environment-file: environment.yml
+        auto-activate-base: false
+
+    - name: Display directory tree before building docs
+      run: tree
+
+    - name: Build documentation
+      run: |
+        conda activate docs-env
+        cd docs
+        make html
+
+    - name: Display directory tree after building docs
+      run: tree
+
+    - name: Upload built docs
+      uses: actions/upload-artifact@v2
+      with:
+        name: html-docs
+        path: docs/_build/html
