@@ -159,11 +159,11 @@ jobs:
 
     - name: Run Workflow Scripts
       run: |
-        python scripts/ingest_data.py datasets/housing --log-level INFO --no-console-log
+        python scripts/data_ingest_run.py datasets/housing --log-level INFO --no-console-log
         mkdir -p datasets/models
-        python scripts/train.py datasets/housing datasets/models --log-level INFO --no-console-log
+        python scripts/train_run.py datasets/housing datasets/models --log-level INFO --no-console-log
         mkdir -p datasets/output
-        python scripts/score.py datasets/models datasets/housing datasets/output --log-level INFO --no-console-log
+        python scripts/score_run.py datasets/models datasets/housing datasets/output --log-level INFO --no-console-log
       working-directory: python-pack-assign
 
 
