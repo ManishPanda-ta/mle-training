@@ -26,6 +26,9 @@ jobs:
             auto-activate-base: false
             auto-update-conda: true
             python-version: 3.13
+            
+    - name: Activate Conda Environment
+      run: source $CONDA/bin/activate mle-dev
 
     - name: Display directory tree before building docs
       run: tree
