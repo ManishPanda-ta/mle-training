@@ -32,7 +32,6 @@ jobs:
 
     - name: Build documentation
       run: |
-        conda activate docs-env
         cd docs
         make html
 
