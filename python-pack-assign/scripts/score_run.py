@@ -1,9 +1,9 @@
 import argparse
-import logging
 
 import joblib  # Add this import to load the imputer
 import pandas as pd
 from python_package.scoring import evaluate_model, prepare_test_data
+from utils.logging_utils import logging, setup_logging
 
 
 def score_model(model_path, dataset_path, output_path):
@@ -41,27 +41,29 @@ if __name__ == "__main__":
         help="Disable console logging",
     )
     args = parser.parse_args()
-    log_level = getattr(logging, args.log_level.upper(), logging.INFO)
-    logging.basicConfig(
-        level=log_level,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    )
+    # log_level = getattr(logging, args.log_level.upper(), logging.INFO)
+    # logging.basicConfig(
+    #     level=log_level,
+    #     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    # )
 
-    if args.log_path:
-        file_handler = logging.FileHandler(args.log_path)
-        file_handler.setLevel(log_level)
-        file_handler.setFormatter(
-            logging.Formatter(
-                "%(asctime)s - %(name)s - %(levellevel)s - %(message)s"
-            )
-        )
-        logging.getLogger().addHandler(file_handler)
+    # if args.log_path:
+    #     file_handler = logging.FileHandler(args.log_path)
+    #     file_handler.setLevel(log_level)
+    #     file_handler.setFormatter(
+    #         logging.Formatter(
+    #             "%(asctime)s - %(name)s - %(levellevel)s - %(message)s"
+    #         )
+    #     )
+    #     logging.getLogger().addHandler(file_handler)
 
-    if args.no_console_log:
-        logging.getLogger().handlers = [
-            h
-            for h in logging.getLogger().handlers
-            if not isinstance(h, logging.StreamHandler)
-        ]
+    # if args.no_console_log:
+    #     logging.getLogger().handlers = [
+    #         h
+    #         for h in logging.getLogger().handlers
+    #         if not isinstance(h, logging.StreamHandler)
+    #     ]
+
+    setup_logging(args.log_level, args.log_path, args.no_console_log)
     score_model(args.model_path, args.dataset_path, args.output_path)
     print("Score Script Ran Successfully")
