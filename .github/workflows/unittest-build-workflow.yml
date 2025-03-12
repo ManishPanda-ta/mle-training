@@ -1,0 +1,97 @@
+name : Build and Test - Refactored
+
+on:
+  push:
+    branches:
+      - enh/15/unit-test-logic
+  pull_request:
+    branches:
+      - enh/15/unit-test-logic
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: 3.13
+
+    - name: Create environment and install dependencies from env.yml
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda env create -f env.yml -n myenv || conda activate myenv
+          conda activate myenv
+          conda install -c conda-forge setuptools wheel
+
+    - name: Install tree
+      run: sudo apt-get install tree
+
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+      working-directory: python-pack-assign
+
+    - name: Display directory tree after build
+      run: tree
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
+
+  validate:
+    name: validate Job
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: 3.13
+
+    - name: Install dependencies from env.yml
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda env create -f env.yml -n myenv || conda activate myenv
+          conda activate myenv
+
+    - name: Activate Conda environment
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate myenv
+          conda list
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
+
+    - name: Install package
+      run: pip install -e .
+
+    - name: Lint with flake8
+      run: |
+        source $(conda info --base)/etc/profile.d/conda.sh
+        conda activate myenv
+        flake8 src/
+      working-directory: python-pack-assign
+
+    - name: Run tests
+      run: |
+        source $(conda info --base)/etc/profile.d/conda.sh
+        conda activate myenv
+        export PYTHONPATH=src
+        pytest tests/
+      working-directory: python-pack-assign
