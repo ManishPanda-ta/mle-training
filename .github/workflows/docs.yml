@@ -12,6 +12,9 @@ jobs:
   build:
     name : docs-build
     runs-on: ubuntu-latest
+    defaults:
+        run:
+          shell: bash -el {0}
 
     steps:
     - name: Checkout repository
@@ -28,7 +31,14 @@ jobs:
             python-version: 3.13
 
     - name: Activate Conda Environment
-      run: source $CONDA/bin/activate mle-dev
+      run: #source $CONDA/bin/activate mle-dev
+           conda install -y sphinx
+
+    - run: |
+            conda info
+            conda list
+            conda init
+            sphinx-build --version
 
     - name: Display directory tree before building docs
       run: tree
