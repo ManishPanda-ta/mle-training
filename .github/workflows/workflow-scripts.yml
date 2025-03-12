@@ -1,169 +1,169 @@
-# name : Build and Test - Logging
+name : Build and Test - Logging
 
-# on:
-#   push:
-#     branches:
-#       - enh/19/logging
-#   pull_request:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - enh/19/logging
+  pull_request:
+    branches:
+      - main
 
-# jobs:
-#   unit-test:
-#     name: Unit Test Job
-#     runs-on: ubuntu-latest
+jobs:
+  unit-test:
+    name: Unit Test Job
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-#     - name: Set up Conda
-#       uses: conda-incubator/setup-miniconda@v3
-#       with:
-#         installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
-#         activate-environment: mle-dev
-#         environment-file: env.yml
-#         auto-activate-base: false
-#         auto-update-conda: true
-#         python-version: 3.13
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
+        activate-environment: mle-dev
+        environment-file: env.yml
+        auto-activate-base: false
+        auto-update-conda: true
+        python-version: 3.13
 
-#     - name: Install dependencies from env.yml
-#       run: |
-#           source $(conda info --base)/etc/profile.d/conda.sh
-#           conda env create -f env.yml -n mle-dev || conda activate mle-dev
-#           conda activate mle-dev
+    - name: Install dependencies from env.yml
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda env create -f env.yml -n mle-dev || conda activate mle-dev
+          conda activate mle-dev
 
-#     - name: Activate Conda environment
-#       run: |
-#           source $(conda info --base)/etc/profile.d/conda.sh
-#           conda activate mle-dev
-#           conda list
+    - name: Activate Conda environment
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate mle-dev
+          conda list
 
-#     - name: Install tree
-#       run: sudo apt-get install tree
+    - name: Install tree
+      run: sudo apt-get install tree
 
-#     - name: Build package
-#       run: python setup.py sdist bdist_wheel
-#       working-directory: python-pack-assign
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+      working-directory: python-pack-assign
 
-#     - name: Display directory tree after build
-#       run: tree
+    - name: Display directory tree after build
+      run: tree
 
-#     - name: Install package
-#       run: pip install -e .
+    - name: Install package
+      run: pip install -e .
 
-#     - name: Run unit tests
-#       run: |
-#         source $(conda info --base)/etc/profile.d/conda.sh
-#         conda activate mle-dev
-#         export PYTHONPATH=src
-#         pytest tests/unit_tests/
-#       working-directory: python-pack-assign
-#       continue-on-error: false
+    - name: Run unit tests
+      run: |
+        source $(conda info --base)/etc/profile.d/conda.sh
+        conda activate mle-dev
+        export PYTHONPATH=src
+        pytest tests/unit_tests/
+      working-directory: python-pack-assign
+      continue-on-error: false
 
 
-#   build:
-#     name: build job
-#     needs: unit-test
-#     runs-on: ubuntu-latest
+  build:
+    name: build job
+    needs: unit-test
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout repository
-#       uses: actions/checkout@v2
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-#     - name: Set up Conda
-#       uses: conda-incubator/setup-miniconda@v3
-#       with:
-#         installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
-#         activate-environment: mle-dev
-#         environment-file: env.yml
-#         auto-activate-base: false
-#         auto-update-conda: true
-#         python-version: 3.13
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
+        activate-environment: mle-dev
+        environment-file: env.yml
+        auto-activate-base: false
+        auto-update-conda: true
+        python-version: 3.13
 
-#     - name: Create environment and install dependencies from env.yml
-#       run: |
-#           source $(conda info --base)/etc/profile.d/conda.sh
-#           conda env create -f env.yml -n mle-dev || conda activate mle-dev
-#           conda activate mle-dev
-#           conda install -c conda-forge setuptools wheel
+    - name: Create environment and install dependencies from env.yml
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda env create -f env.yml -n mle-dev || conda activate mle-dev
+          conda activate mle-dev
+          conda install -c conda-forge setuptools wheel
 
-#     - name: Build package
-#       run: python setup.py sdist bdist_wheel
-#       working-directory: python-pack-assign
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+      working-directory: python-pack-assign
 
-#     - name: Install package
-#       run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
+    - name: Install package
+      run: pip install python-pack-assign/dist/python_pack_assign-0.1-py3-none-any.whl
 
-#     - name: Run Installation tests
-#       run: |
-#           source $(conda info --base)/etc/profile.d/conda.sh
-#           conda activate mle-dev
-#           export PYTHONPATH=src
-#           pytest tests/test_installation.py
-#       working-directory: python-pack-assign
-#       continue-on-error: false
+    - name: Run Installation tests
+      run: |
+          source $(conda info --base)/etc/profile.d/conda.sh
+          conda activate mle-dev
+          export PYTHONPATH=src
+          pytest tests/test_installation.py
+      working-directory: python-pack-assign
+      continue-on-error: false
 
-#     - name: Upload build artifacts
-#       uses: actions/upload-artifact@v4
-#       with:
-#         name: build-artifacts
-#         path: python-pack-assign/dist/
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
 
-#   deploy:
-#     name: deploy job
-#     needs: build
-#     runs-on: ubuntu-latest
-#     defaults:
-#         run:
-#           shell: bash -el {0}
+  deploy:
+    name: deploy job
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          shell: bash -el {0}
 
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-#     - name: Set up Conda
-#       uses: conda-incubator/setup-miniconda@v3
-#       with:
-#         installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
-#         activate-environment: mle-dev
-#         environment-file: env.yml
-#         auto-activate-base: false
-#         auto-update-conda: true
-#         python-version: 3.13
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
+        activate-environment: mle-dev
+        environment-file: env.yml
+        auto-activate-base: false
+        auto-update-conda: true
+        python-version: 3.13
 
-#     - run: |
-#         conda info
-#         conda list
-#         conda init
+    - run: |
+        conda info
+        conda list
+        conda init
 
-#     - name: Download build artifacts
-#       uses: actions/download-artifact@v4
-#       with:
-#         name: build-artifacts
-#         path: python-pack-assign/dist/
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        path: python-pack-assign/dist/
 
-#     - name: Install package in editable mode
-#       run: |
-#           pip install -e .
-#       working-directory: python-pack-assign
+    - name: Install package in editable mode
+      run: |
+          pip install -e .
+      working-directory: python-pack-assign
 
-#     - name: Print working directory
-#       run: |
-#         pwd
+    - name: Print working directory
+      run: |
+        pwd
 
-#     - name: Set PYTHONPATH to include src directory
-#       run: |
-#           export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
-#           echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
+    - name: Set PYTHONPATH to include src directory
+      run: |
+          export PYTHONPATH=$(pwd)/python-pack-assign/src:$PYTHONPATH
+          echo $PYTHONPATH  # Debugging step to ensure PYTHONPATH is correct
 
-#     - name: Run Workflow Scripts
-#       run: |
-#         python scripts/ingest_data.py datasets/housing --log-level INFO --no-console-log
-#         mkdir -p datasets/models
-#         python scripts/train.py datasets/housing datasets/models --log-level INFO --no-console-log
-#         mkdir -p datasets/output
-#         python scripts/score.py datasets/models datasets/housing datasets/output --log-level INFO --no-console-log
-#       working-directory: python-pack-assign
+    - name: Run Workflow Scripts
+      run: |
+        python scripts/data_ingest_run.py datasets/housing --log-level INFO --no-console-log
+        mkdir -p datasets/models
+        python scripts/train_run.py datasets/housing datasets/models --log-level INFO --no-console-log
+        mkdir -p datasets/output
+        python scripts/score_run.py datasets/models datasets/housing datasets/output --log-level INFO --no-console-log
+      working-directory: python-pack-assign
 
 
