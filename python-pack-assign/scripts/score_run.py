@@ -1,9 +1,14 @@
 import argparse
+import logging
+import os
+import sys
 
 import joblib  # Add this import to load the imputer
 import pandas as pd
 from python_package.scoring import evaluate_model, prepare_test_data
-from utils.logging_utils import logging, setup_logging
+from utils.logging_utils import setup_logging
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
 def score_model(model_path, dataset_path, output_path):

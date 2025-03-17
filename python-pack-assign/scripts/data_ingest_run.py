@@ -1,4 +1,7 @@
 import argparse
+import logging
+import os
+import sys
 
 import numpy as np
 import pandas as pd
@@ -7,7 +10,9 @@ from python_package.data_ingestion import (
     load_housing_data,
 )
 from sklearn.model_selection import StratifiedShuffleSplit, train_test_split
-from utils.logging_utils import logging, setup_logging
+from utils.logging_utils import setup_logging
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
 def ingest_data(output_path):

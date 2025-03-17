@@ -1,5 +1,7 @@
 import argparse
-from utils.logging_utils import logging, setup_logging
+import logging
+import os
+import sys
 
 import joblib  # Add this import to save the imputer
 import numpy as np
@@ -11,6 +13,9 @@ from python_package.training import (
     train_linear_regression,
     train_random_forest,
 )
+from utils.logging_utils import setup_logging
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
 def train_model(input_path, output_path):
