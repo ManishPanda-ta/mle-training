@@ -163,12 +163,12 @@ jobs:
         # python scripts/train_run.py datasets/housing datasets/models --log-level INFO --no-console-log
         # mkdir -p datasets/output
         # python scripts/score_run.py datasets/models datasets/housing datasets/output --log-level INFO --no-console-log
-          python scripts/ingest_data.py -h
-          python scripts/ingest_data.py datasets/housing_data --log_level DEBUG --log_path logs/ingest_data.log --console_log True
-          python scripts/train.py -h
-          python scripts/train.py datasets/housing_data datasets/train_data --log_level DEBUG --log_path logs/train_data.log --console_log True
-          python scripts/score.py -h
-          python scripts/score.py datasets/housing_data datasets/train_data/final_model.pkl --log_level INFO --log_path logs/score_data.log --console_log True
+          python scripts/data_ingest_run.py -h
+          python scripts/data_ingest_run.py datasets/housing_data --log_level DEBUG --log_path logs/ingest_data.log --console_log True
+          python scripts/train_run.py -h
+          python scripts/train_run.py datasets/housing_data datasets/train_data --log_level DEBUG --log_path logs/train_data.log --console_log True
+          python scripts/score_run.py -h
+          python scripts/score_run.py datasets/housing_data datasets/train_data/final_model.pkl --log_level INFO --log_path logs/score_data.log --console_log True
         working-directory: python-pack-assign
 
 
