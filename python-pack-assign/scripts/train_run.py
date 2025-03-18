@@ -1,5 +1,7 @@
 import argparse
 import logging
+import os
+import sys
 
 import joblib  # Add this import to save the imputer
 import numpy as np
@@ -11,6 +13,9 @@ from python_package.training import (
     train_linear_regression,
     train_random_forest,
 )
+from utils.logging_utils import setup_logging
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 
 def train_model(input_path, output_path):
@@ -67,27 +72,28 @@ if __name__ == "__main__":
         help="Disable console logging",
     )
     args = parser.parse_args()
-    log_level = getattr(logging, args.log_level.upper(), logging.INFO)
-    logging.basicConfig(
-        level=log_level,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    )
+    # log_level = getattr(logging, args.log_level.upper(), logging.INFO)
+    # logging.basicConfig(
+    #     level=log_level,
+    #     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    # )
 
-    if args.log_path:
-        file_handler = logging.FileHandler(args.log_path)
-        file_handler.setLevel(log_level)
-        file_handler.setFormatter(
-            logging.Formatter(
-                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-            )
-        )
-        logging.getLogger().addHandler(file_handler)
+    # if args.log_path:
+    #     file_handler = logging.FileHandler(args.log_path)
+    #     file_handler.setLevel(log_level)
+    #     file_handler.setFormatter(
+    #         logging.Formatter(
+    #             "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    #         )
+    #     )
+    #     logging.getLogger().addHandler(file_handler)
 
-    if args.no_console_log:
-        logging.getLogger().handlers = [
-            h
-            for h in logging.getLogger().handlers
-            if not isinstance(h, logging.StreamHandler)
-        ]
+    # if args.no_console_log:
+    #     logging.getLogger().handlers = [
+    #         h
+    #         for h in logging.getLogger().handlers
+    #         if not isinstance(h, logging.StreamHandler)
+    #     ]
+    setup_logging(args.log_level, args.log_path, args.no_console_log)
     train_model(args.input_path, args.output_path)
     print("Train Script Ran Successfully")
